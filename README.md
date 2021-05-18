@@ -1,6 +1,6 @@
 # flutter_osc
 
-A new Flutter project.
+接口文档：https://www.oschina.net/openapi
 
 ## Getting Started
 
