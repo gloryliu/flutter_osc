@@ -95,20 +95,26 @@ class _MainPageState extends State<MainPage> {
     return Container(
       child: Scaffold(
         body: _currentPage,
-        bottomNavigationBar: BottomNavigationBar(
-          fixedColor: Color(color_ff24cf5f),
-          items: _tabs,
-          currentIndex: _currentIndex,
-          type: BottomNavigationBarType.fixed,
-          onTap: (index) {
-            if(index == 2) {
-              return _gotoPublic();
-            }
-            setState(() {
-              _currentIndex = index;
-              _currentPage = _pages[_currentIndex];
-            });
-          },
+        bottomNavigationBar: Theme(
+          data: ThemeData(
+            highlightColor: Color.fromRGBO(0, 0, 0, 0),
+            splashColor: Color.fromRGBO(0, 0, 0, 0),
+          ),
+          child: BottomNavigationBar(
+            fixedColor: Color(color_ff24cf5f),
+            items: _tabs,
+            currentIndex: _currentIndex,
+            type: BottomNavigationBarType.fixed,
+            onTap: (index) {
+              if(index == 2) {
+                return _gotoPublic();
+              }
+              setState(() {
+                _currentIndex = index;
+                _currentPage = _pages[_currentIndex];
+              });
+            },
+          ),
         ),
         floatingActionButton: _createPublishButton(),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
