@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../search_page.dart';
+
 // 综合页面
 
 class SynthesizePage extends StatefulWidget {
@@ -39,6 +41,14 @@ class _SynthesizePageState extends State<SynthesizePage>
               unselectedLabelStyle:
                   TextStyle(color: Colors.black, fontSize: 14),
             ),
+            actions: [
+              IconButton(
+                icon: Icon(Icons.search),
+                onPressed: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => SearchPage()));
+                },
+              )
+            ],
           ),
           body: TabBarView(
             children: _tabName,
