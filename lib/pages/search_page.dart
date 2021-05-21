@@ -11,11 +11,16 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
+
   @override
   Widget build(BuildContext context) {
     return Container(
       child: Scaffold(
-        appBar: SAppBarSearch(),
+        appBar: SAppBarSearch(
+          onSearch: (key) {
+            print(key);
+          },
+        ),
         body: Center(
           child: Text('搜索'),
         ),
