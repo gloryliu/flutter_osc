@@ -5,15 +5,13 @@ import 'package:flutter/material.dart';
 import 'main_page.dart';
 
 class SplashPage extends StatefulWidget {
-  const SplashPage({Key key}) : super(key: key);
-
   @override
   _SplashPageState createState() => _SplashPageState();
 }
 
 class _SplashPageState extends State<SplashPage> {
   int _currentTime = 6;
-  Timer _timer;
+  late Timer _timer;
 
   @override
   void initState() {

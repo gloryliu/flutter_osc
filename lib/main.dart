@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_osc/pages/main_page.dart';
+import 'package:flutter_osc/config/app_config.dart';
 import 'package:flutter_osc/pages/splash_page.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+
+  AppConfig().init();
 
   runApp(MyApp());
 
@@ -14,8 +16,6 @@ void main() {
 
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

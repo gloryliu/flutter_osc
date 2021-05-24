@@ -10,8 +10,6 @@ import 'package:flutter_osc/pages/utils/assets_color.dart';
 import 'main/publish_page.dart';
 
 class MainPage extends StatefulWidget {
-  const MainPage({Key key}) : super(key: key);
-
   @override
   _MainPageState createState() => _MainPageState();
 }
@@ -82,7 +80,7 @@ class _MainPageState extends State<MainPage> {
   ];
 
   int _currentIndex = 0;
-  Widget _currentPage;
+  late Widget _currentPage;
 
   @override
   void initState() {

@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 // 动弹
 
 class TweetPage extends StatefulWidget {
-  const TweetPage({Key key}) : super(key: key);
-
   @override
   _TweetPageState createState() => _TweetPageState();
 }

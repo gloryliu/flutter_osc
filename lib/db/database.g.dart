@@ -102,7 +102,7 @@ class _$SearchKeywordDao extends SearchKeywordDao {
             database,
             'SearchKeyword',
             (SearchKeyword item) =>
-                <String, Object?>{'id': item.id, 'keyword': item.keyword});
+                <String, Object>{'id': item.id, 'keyword': item.keyword});
 
   final sqflite.DatabaseExecutor database;
 

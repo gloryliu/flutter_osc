@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 
 class SAppBarSearch extends StatefulWidget implements PreferredSizeWidget {
   const SAppBarSearch({
-    Key key,
     this.elevation = 0,
     this.borderRadius = 20,
     this.autoFocus = false,
@@ -21,12 +20,12 @@ class SAppBarSearch extends StatefulWidget implements PreferredSizeWidget {
     this.onCancel,
     this.onChange,
     this.onSearch,
-  }) : super(key: key);
+  });
 
   final double borderRadius;
   final bool autoFocus;
-  final FocusNode focusNode;
-  final TextEditingController controller;
+  final FocusNode? focusNode;
+  final TextEditingController? controller;
 
   // appbar 阴影
   final double elevation;
@@ -35,32 +34,32 @@ class SAppBarSearch extends StatefulWidget implements PreferredSizeWidget {
   final double height;
 
   // 默认值
-  final String value;
+  final String? value;
 
   // 搜索框前面组件
-  final Widget leading;
+  final Widget? leading;
 
   // 搜索框后面组件
-  final Widget suffix;
+  final Widget? suffix;
   final List<Widget> actions;
 
   // 提示文字
-  final String hintText;
+  final String? hintText;
 
   // 输入框点击
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
 
   // 单独清除输入框内容
-  final VoidCallback onClear;
+  final VoidCallback? onClear;
 
   // 清除输入框内容并取消输入
-  final VoidCallback onCancel;
+  final VoidCallback? onCancel;
 
   // 输入框内容改变
-  final ValueChanged onChange;
+  final ValueChanged? onChange;
 
   // 点击键盘搜索
-  final ValueChanged onSearch;
+  final ValueChanged? onSearch;
 
   @override
   _SAppBarSearchState createState() => _SAppBarSearchState();
@@ -70,8 +69,8 @@ class SAppBarSearch extends StatefulWidget implements PreferredSizeWidget {
 }
 
 class _SAppBarSearchState extends State<SAppBarSearch> {
-  TextEditingController _controller;
-  FocusNode _focusNode;
+  late TextEditingController _controller;
+  late FocusNode _focusNode;
   bool isInput = false;
 
   bool get isFocus => _focusNode.hasFocus;
@@ -84,9 +83,7 @@ class _SAppBarSearchState extends State<SAppBarSearch> {
   void initState() {
     _controller = widget.controller ?? TextEditingController();
     _focusNode = widget.focusNode ?? FocusNode();
-    if (widget.value != null) {
-      _controller.text = widget.value;
-    }
+    _controller.text = widget.value ?? '';
     _focusNode.addListener(() {
       setState(() {});
     });
@@ -154,7 +151,7 @@ class _SAppBarSearchState extends State<SAppBarSearch> {
   @override
   Widget build(BuildContext context) {
     final ScaffoldState scaffold = Scaffold.of(context);
-    final ModalRoute<dynamic> parentRoute = ModalRoute.of(context);
+    final ModalRoute<dynamic?>? parentRoute = ModalRoute.of(context);
     final bool canPop = parentRoute?.canPop ?? false;
     final bool hasDrawer = scaffold?.hasDrawer ?? false;
     double left = !canPop && !hasDrawer && widget.leading == null ? 15 : 0;
