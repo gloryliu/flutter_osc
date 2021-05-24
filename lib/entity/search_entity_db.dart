@@ -4,16 +4,24 @@ import 'package:floor/floor.dart';
 
 @entity
 class SearchKeyword {
-  @primaryKey
-  final int id;
-  final String keyword;
+  @PrimaryKey(autoGenerate: true)
+  int? id;
+  String keyword = '';
 
   SearchKeyword(this.id, this.keyword);
+
+  SearchKeyword.keyword(String keyword) {
+    this.keyword = keyword;
+  }
+
 }
 
 @dao
 abstract class SearchKeywordDao {
   @insert
   Future<void> insertSearchKeyword(SearchKeyword keyword);
+
+  @Query('SELECT * FROM SearchKeyword')
+  Future<List<SearchKeyword>> findAllSearchKeyword();
 }
 

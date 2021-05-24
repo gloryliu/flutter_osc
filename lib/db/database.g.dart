@@ -81,7 +81,7 @@ class _$FlutterDatabase extends FlutterDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `SearchKeyword` (`id` INTEGER, `keyword` TEXT, PRIMARY KEY (`id`))');
+            'CREATE TABLE IF NOT EXISTS `SearchKeyword` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `keyword` TEXT NOT NULL)');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -98,17 +98,27 @@ class _$FlutterDatabase extends FlutterDatabase {
 
 class _$SearchKeywordDao extends SearchKeywordDao {
   _$SearchKeywordDao(this.database, this.changeListener)
-      : _searchKeywordInsertionAdapter = InsertionAdapter(
+      : _queryAdapter = QueryAdapter(database),
+        _searchKeywordInsertionAdapter = InsertionAdapter(
             database,
             'SearchKeyword',
             (SearchKeyword item) =>
-                <String, Object>{'id': item.id, 'keyword': item.keyword});
+                <String, Object?>{'id': item.id, 'keyword': item.keyword});
 
   final sqflite.DatabaseExecutor database;
 
   final StreamController<String> changeListener;
 
+  final QueryAdapter _queryAdapter;
+
   final InsertionAdapter<SearchKeyword> _searchKeywordInsertionAdapter;
+
+  @override
+  Future<List<SearchKeyword>> findAllSearchKeyword() async {
+    return _queryAdapter.queryList('SELECT * FROM SearchKeyword',
+        mapper: (Map<String, Object?> row) =>
+            SearchKeyword(row['id'] as int?, row['keyword'] as String));
+  }
 
   @override
   Future<void> insertSearchKeyword(SearchKeyword keyword) async {
