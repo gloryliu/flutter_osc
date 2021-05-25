@@ -121,6 +121,11 @@ class _$SearchKeywordDao extends SearchKeywordDao {
   }
 
   @override
+  Future<void> deleteAllSearchKeyword() async {
+    await _queryAdapter.queryNoReturn('Delete FROM SearchKeyword');
+  }
+
+  @override
   Future<void> insertSearchKeyword(SearchKeyword keyword) async {
     await _searchKeywordInsertionAdapter.insert(
         keyword, OnConflictStrategy.abort);

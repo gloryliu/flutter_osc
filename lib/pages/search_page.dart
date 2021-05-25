@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_osc/config/app_config.dart';
 import 'package:flutter_osc/entity/search_entity_db.dart';
+import 'package:flutter_osc/pages/utils/dialog_utils.dart';
 import 'package:flutter_osc/widgets/appbar_search_widget.dart';
 
 // 搜索页面
@@ -28,6 +29,14 @@ class _SearchPageState extends State<SearchPage> {
     });
   }
 
+  void _clearAllSearchHistory() {
+    AppConfig().getSearchKeywordDAO().deleteAllSearchKeyword().then((value) {
+      setState(() {
+        _searchKeywords.clear();
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -49,7 +58,12 @@ class _SearchPageState extends State<SearchPage> {
                   textAlign: TextAlign.center,
                 ),
                 onTap: () {
-                  print('清空搜索数据');
+                  showAlertDialog(context,'确认清空搜索历史记录吗？',(){
+                    print('确定');
+                    _clearAllSearchHistory();
+                  },(){
+                    print('取消');
+                  });
                 },
               );
             }

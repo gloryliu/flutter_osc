@@ -23,5 +23,8 @@ abstract class SearchKeywordDao {
 
   @Query('SELECT * FROM SearchKeyword')
   Future<List<SearchKeyword>> findAllSearchKeyword();
+
+  @Query('Delete FROM SearchKeyword')
+  Future<void> deleteAllSearchKeyword();
 }
 
