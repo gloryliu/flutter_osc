@@ -40,27 +40,48 @@ class _SearchPageState extends State<SearchPage> {
           },
         ),
         body: ListView.separated(
-            itemBuilder: (context, index) {
-              var data = _searchKeywords[index];
-              return Container(
-                margin: EdgeInsets.all(5),
-                child: Row(
-                  children: [
-                    Icon(Icons.search),
-                    Text(
-                      data.keyword,
-                      style: TextStyle(color: Colors.black, fontSize: 18),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ],
-                )
+          itemBuilder: (context, index) {
+            if (index == _searchKeywords.length) {
+              return InkWell(
+                child: Text(
+                  '清空搜索数据',
+                  style: TextStyle(color: Colors.black54, fontSize: 18),
+                  textAlign: TextAlign.center,
+                ),
+                onTap: () {
+                  print('清空搜索数据');
+                },
               );
-            },
-            separatorBuilder: (context, index) {
-              return Divider();
-            },
-            itemCount: _searchKeywords.length),
+            }
+            var data = _searchKeywords[index];
+            return GestureDetector(
+              child: Container(
+                  margin: EdgeInsets.all(5),
+                  child: Row(
+                    children: [
+                      Icon(Icons.search),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Text(
+                        data.keyword,
+                        style: TextStyle(color: Colors.black, fontSize: 18),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
+                  )),
+              onTap: () {
+                print('点击了$index');
+              },
+            );
+          },
+          separatorBuilder: (context, index) {
+            return Divider();
+          },
+          itemCount:
+              _searchKeywords.length > 0 ? _searchKeywords.length + 1 : 0,
+        ),
       ),
     );
   }
