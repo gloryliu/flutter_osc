@@ -153,7 +153,7 @@ class _SAppBarSearchState extends State<SAppBarSearch> {
     final ScaffoldState scaffold = Scaffold.of(context);
     final ModalRoute<dynamic?>? parentRoute = ModalRoute.of(context);
     final bool canPop = parentRoute?.canPop ?? false;
-    final bool hasDrawer = scaffold?.hasDrawer ?? false;
+    final bool hasDrawer = scaffold.hasDrawer ?? false;
     double left = !canPop && !hasDrawer && widget.leading == null ? 15 : 0;
     double right = isActionEmpty && !isFocus && isTextEmpty ? 15 : 0;
     return AppBar(

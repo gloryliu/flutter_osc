@@ -5,7 +5,7 @@ import 'package:flutter_osc/pages/main/discover_page.dart';
 import 'package:flutter_osc/pages/main/mine_page.dart';
 import 'package:flutter_osc/pages/main/synthesize_page.dart';
 import 'package:flutter_osc/pages/main/tweet_page.dart';
-import 'package:flutter_osc/pages/utils/assets_color.dart';
+import 'package:flutter_osc/utils/assets_color.dart';
 
 import 'main/publish_page.dart';
 

@@ -31,6 +31,10 @@ dependencies:
 
   # orm
   floor: ^1.1.0
+  # http dio
+  dio: ^4.0.0
+  # 本地数据存储
+  shared_preferences: ^2.0.6
 
 dev_dependencies:
   flutter_test:

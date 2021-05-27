@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_osc/pages/syntherize/follow_software_engineer_page.dart';
 
 import '../search_page.dart';
 
@@ -14,6 +15,16 @@ class _SynthesizePageState extends State<SynthesizePage>
     with SingleTickerProviderStateMixin {
   final List<Widget> _tabName = [
     Text('关注'),
+    Text('软件'),
+    Text('最新'),
+    Text('推荐'),
+    Text('问答'),
+    Text('博客'),
+    Text('英文'),
+  ];
+
+  final List<Widget> _tabPage = [
+    FollowSoftwareEngineersPage(),
     Text('软件'),
     Text('最新'),
     Text('推荐'),
@@ -49,7 +60,7 @@ class _SynthesizePageState extends State<SynthesizePage>
             ],
           ),
           body: TabBarView(
-            children: _tabName,
+            children: _tabPage,
           ),
         ),
       ),

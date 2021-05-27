@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_osc/config/app_config.dart';
 import 'package:flutter_osc/entity/search_entity_db.dart';
-import 'package:flutter_osc/pages/utils/dialog_utils.dart';
+import 'package:flutter_osc/utils/dialog_utils.dart';
 import 'package:flutter_osc/widgets/appbar_search_widget.dart';
 
 // 搜索页面
