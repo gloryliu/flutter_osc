@@ -33,7 +33,7 @@ class _SplashPageState extends State<SplashPage> {
         body: Stack(
           children: [
             Image.asset(
-              'assets/default_android.png',
+              'assets/welcome.png',
               fit: BoxFit.cover,
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height,
