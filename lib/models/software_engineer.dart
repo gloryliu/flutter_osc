@@ -20,13 +20,17 @@ class SoftwareEngineer {
   // 用户id
   int? userID;
 
+  // 头像
+  String? portrait;
+
   SoftwareEngineer(
       {this.followStatus,
       this.followers,
       this.name,
       this.project,
       this.projectCount,
-      this.userID});
+      this.userID,
+      this.portrait});
 
   SoftwareEngineer.fromJson(Map<String, dynamic> json) {
     followStatus = json['followStatus'];
@@ -35,6 +39,7 @@ class SoftwareEngineer {
     project = json['project'];
     projectCount = json['projectCount'];
     userID = json['userID'];
+    portrait = json['portrait'];
   }
 
   Map<String, dynamic> toJson() {
@@ -45,6 +50,7 @@ class SoftwareEngineer {
     data['project'] = this.project;
     data['projectCount'] = this.projectCount;
     data['userID'] = this.userID;
+    data['portrait'] = this.portrait;
     return data;
   }
 
