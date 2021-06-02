@@ -25,6 +25,7 @@ class _SoftwareRecommendPageState extends State<SoftwareRecommendPage> {
   /// 获取列表
   void _getRecommendSoftware() {
     ApiRepository.getSoftwareList().then((value) {
+      print(value.toString());
       setState(() {
         _softwareList.currentSize = value.data?.currentSize;
         _softwareList.items?.addAll(value.data?.items ?? []);
@@ -35,43 +36,69 @@ class _SoftwareRecommendPageState extends State<SoftwareRecommendPage> {
   /// 获取banner
   void _getBanners() {
     ApiRepository.getProjectBannerList().then((value) {
-      _banners.addAll(value.data ?? []);
+      print(value.toString());
+      setState(() {
+        _banners.addAll(value.data ?? []);
+      });
     });
+  }
+
+  Widget _getNestedScrollViewHeader() {
+    return ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: _banners.length,
+        itemBuilder: (BuildContext context, int index) {
+          var banner = _banners[index];
+          return Container(
+            child: Row(children: [
+              SizedBox(width: 10,),
+              Stack(
+                children: [
+                  Image.network(banner.img ?? '', fit: BoxFit.fill, width: 200, height: 100,)
+                ],
+              ),
+            ],),
+          );
+        });
+  }
+
+  Widget _getNetstedScrollViewBody() {
+    return ListView.separated(
+      itemCount: _softwareList.items?.length ?? 0,
+      itemBuilder: (BuildContext context, int index) {
+        var item = _softwareList.items?[index];
+        if ('author' == item?.type) {
+          return Text('作者');
+        } else if ('project' == item?.type) {
+          return Text('项目');
+        }
+        return Container();
+      },
+      separatorBuilder: (BuildContext context, int index) {
+        return Divider();
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: ListView.builder(
-          itemCount: 1,
-          itemBuilder: (BuildContext context, int index) {
-            return Column(
-              children: [
-                ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: _banners.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      var banner = _banners[index];
-                      return Image.network(banner.img ?? '');
-                    }),
-                ListView.separated(
-                  itemCount: _softwareList.items?.length ?? 0,
-                  itemBuilder: (BuildContext context, int index) {
-                    var item = _softwareList.items?[index];
-                    if ('author' == item?.type) {
-                      return Text('作者');
-                    } else if ('project' == item?.type) {
-                      return Text('项目');
-                    }
-                    return Container();
-                  },
-                  separatorBuilder: (BuildContext context, int index) {
-                    return Divider();
-                  },
-                )
-              ],
-            );
-          }),
+      child: NestedScrollView(
+        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+          return [
+            Container(child: Text('Hello'),)
+            // SliverAppBar(
+            //   leading: null,
+            //   automaticallyImplyLeading: false,
+            //   expandedHeight: 200,
+            //   flexibleSpace: FlexibleSpaceBar(
+            //     title: _getNestedScrollViewHeader(),
+            //   ),
+            // )
+          ];
+        },
+        body: _getNetstedScrollViewBody(),
+      ),
     );
   }
 }
