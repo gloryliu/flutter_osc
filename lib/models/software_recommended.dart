@@ -3,7 +3,7 @@
 class SoftwareList {
   int? currentSize;
   List<Item>? items;
-
+  SoftwareList();
   SoftwareList.fromJson(Map<String, dynamic> json) {
     if (json['data'] != null) {
       var data = json['data'];
