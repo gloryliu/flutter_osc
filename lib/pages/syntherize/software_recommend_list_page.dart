@@ -43,28 +43,69 @@ class _SoftwareRecommendPageState extends State<SoftwareRecommendPage> {
     });
   }
 
+  /// 头部滚动
   Widget _getNestedScrollViewHeader() {
     return ListView.builder(
         scrollDirection: Axis.horizontal,
+        shrinkWrap: true,
+        physics: AlwaysScrollableScrollPhysics(),
         itemCount: _banners.length,
         itemBuilder: (BuildContext context, int index) {
           var banner = _banners[index];
+          var boxWidth = (index == _banners.length - 1) ? 10.0 : 0.0;
           return Container(
-            child: Row(children: [
-              SizedBox(width: 10,),
-              Stack(
-                children: [
-                  Image.network(banner.img ?? '', fit: BoxFit.fill, width: 200, height: 100,)
-                ],
-              ),
-            ],),
+            height: 100,
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 10,
+                ),
+                Stack(
+                  children: [
+                    Image.network(
+                      banner.img ?? '',
+                      fit: BoxFit.fill,
+                      width: 200,
+                      height: 100,
+                    ),
+                    Positioned(
+                      child: Container(
+                        margin: EdgeInsets.only(left: 5, bottom: 5),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              banner.name ?? '',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            Text(banner.detail ?? '',
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 14)),
+                          ],
+                        ),
+                      ),
+                      bottom: 0,
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  width: boxWidth,
+                ),
+              ],
+            ),
           );
         });
   }
 
+  /// 下面列表
   Widget _getNetstedScrollViewBody() {
     return ListView.separated(
-      itemCount: _softwareList.items?.length ?? 0,
+      shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
+      itemCount: (_softwareList.items?.length ?? 0),
       itemBuilder: (BuildContext context, int index) {
         var item = _softwareList.items?[index];
         if ('author' == item?.type) {
@@ -80,25 +121,91 @@ class _SoftwareRecommendPageState extends State<SoftwareRecommendPage> {
     );
   }
 
+  /// 中间菜单
+  Widget _getMenus() {
+    return Container(
+      margin: EdgeInsets.only(top: 10, bottom: 10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              CircleAvatar(
+                child: Image.asset('assets/ic_softs.png'),
+              ),
+              SizedBox(height: 3),
+              Text(
+                '软件分类',
+                style: TextStyle(color: Colors.black54, fontSize: 14),
+              ),
+            ],
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              CircleAvatar(
+                child: Image.asset('assets/ic_softs.png'),
+              ),
+              SizedBox(height: 3),
+              Text(
+                '热门国产',
+                style: TextStyle(color: Colors.black54, fontSize: 14),
+              ),
+            ],
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              CircleAvatar(
+                child: Image.asset('assets/ic_softs.png'),
+              ),
+              SizedBox(height: 3),
+              Text(
+                '最新软件',
+                style: TextStyle(color: Colors.black54, fontSize: 14),
+              ),
+            ],
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              CircleAvatar(
+                child: Image.asset('assets/ic_softs.png'),
+              ),
+              SizedBox(height: 3),
+              Text(
+                '开源公司',
+                style: TextStyle(color: Colors.black54, fontSize: 14),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: NestedScrollView(
-        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-          return [
-            Container(child: Text('Hello'),)
-            // SliverAppBar(
-            //   leading: null,
-            //   automaticallyImplyLeading: false,
-            //   expandedHeight: 200,
-            //   flexibleSpace: FlexibleSpaceBar(
-            //     title: _getNestedScrollViewHeader(),
-            //   ),
-            // )
-          ];
-        },
-        body: _getNetstedScrollViewBody(),
-      ),
+    return CustomScrollView(
+      slivers: [
+        SliverList(
+            delegate:
+                SliverChildBuilderDelegate((BuildContext context, int index) {
+          if (index == 0) {
+            return Container(
+              height: 100,
+              child: _getNestedScrollViewHeader(),
+            );
+          } else if (index == 1) {
+            return _getMenus();
+          } else if (index == 2) {
+            return _getNetstedScrollViewBody();
+          } else {
+            return Container();
+          }
+        }, childCount: 3)),
+      ],
     );
   }
 }
