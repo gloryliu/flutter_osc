@@ -4,6 +4,7 @@ import 'package:flutter_osc/models/project_banner.dart';
 import 'package:flutter_osc/models/software_recommended.dart';
 import 'package:flutter_osc/utils/assets_color.dart';
 import 'package:flutter_osc/widgets/flag_widget.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 // 软件推荐列表
 
@@ -16,12 +17,28 @@ class _SoftwareRecommendPageState extends State<SoftwareRecommendPage> {
   SoftwareList _softwareList = SoftwareList();
   List<SoftWareBanner> _banners = [];
 
+  RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
+
   @override
   void initState() {
     _softwareList.items = [];
     _getRecommendSoftware();
     _getBanners();
     super.initState();
+  }
+
+void _onRefresh() async{
+    await Future.delayed(Duration(milliseconds: 1000));
+    _refreshController.refreshCompleted();
+  }
+
+  void _onLoading() async{
+    await Future.delayed(Duration(milliseconds: 1000));
+    setState(() {
+      
+    });
+    _refreshController.loadComplete();
   }
 
   /// 获取列表
@@ -192,25 +209,46 @@ class _SoftwareRecommendPageState extends State<SoftwareRecommendPage> {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      slivers: [
-        SliverList(
-            delegate:
-                SliverChildBuilderDelegate((BuildContext context, int index) {
-          if (index == 0) {
-            return Container(
-              height: 100,
-              child: _getNestedScrollViewHeader(),
-            );
-          } else if (index == 1) {
-            return _getMenus();
-          } else if (index == 2) {
-            return _getNetstedScrollViewBody();
-          } else {
-            return Container();
-          }
-        }, childCount: 3)),
-      ],
+    return SmartRefresher(
+      enablePullUp: true,
+      enablePullDown: true,
+      controller: _refreshController,
+      onRefresh: _onRefresh,
+      onLoading: _onLoading,
+      header: WaterDropHeader(),
+      child: CustomScrollView(
+        slivers: [
+          SliverList(
+              delegate:
+                  SliverChildBuilderDelegate((BuildContext context, int index) {
+            if (index == 0) {
+              return Container(
+                height: 100,
+                child: _getNestedScrollViewHeader(),
+              );
+            } else if (index == 1) {
+              return _getMenus();
+            } else if (index == 2) {
+              return Container(
+                height: 50,
+                margin: EdgeInsets.only(left: 10),
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  '编辑推荐',
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold),
+                ),
+              );
+            } else if (index == 3) {
+              return _getNetstedScrollViewBody();
+            } else {
+              return Container();
+            }
+          }, childCount: 4)),
+        ],
+      ),
     );
   }
 }
@@ -247,7 +285,8 @@ class _ProjectListItemWidgetState extends State<_ProjectListItemWidget> {
     }
 
     if (widget._project?.cn == true) {
-      widgets.add(WidgetSpan(child: const FlagText('国',backGroundColor: Colors.redAccent)));
+      widgets.add(WidgetSpan(
+          child: const FlagText('国', backGroundColor: Colors.redAccent)));
       widgets.add(WidgetSpan(child: const SizedBox(width: 4)));
     }
     widgets.add(TextSpan(
