@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_osc/pages/syntherize/follow_software_engineer_page.dart';
+import 'package:flutter_osc/pages/syntherize/last_list_page.dart';
 import 'package:flutter_osc/pages/syntherize/software_recommend_list_page.dart';
 
 import '../search_page.dart';
@@ -27,7 +28,7 @@ class _SynthesizePageState extends State<SynthesizePage>
   final List<Widget> _tabPage = [
     FollowSoftwareEngineersPage(),
     SoftwareRecommendPage(),
-    Text('最新'),
+    LastInfoPage(),
     Text('推荐'),
     Text('问答'),
     Text('博客'),
