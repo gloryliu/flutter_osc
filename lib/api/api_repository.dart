@@ -21,9 +21,13 @@ class ApiRepository {
   }
 
   /// 软件列表
-  static Future<ApiResponse<SoftwareList>> getSoftwareList() async {
+  static Future<ApiResponse<SoftwareList>> getSoftwareList(int pageSize,int page) async {
     try {
-      final response = await HttpUtils.get(ApiAddress.softwareRecommendList);
+      Map<String,dynamic> params = Map();
+      params['size'] = pageSize;
+      params['page'] = page;
+      print('getSoftwareList params= ${params.toString()}');
+      final response = await HttpUtils.get(ApiAddress.softwareRecommendList,params: params);
       var data = SoftwareList.fromJson(response);
       return ApiResponse.completed(data);
     } on DioError catch (e) {

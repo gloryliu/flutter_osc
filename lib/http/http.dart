@@ -68,6 +68,8 @@ class Http {
     Response response;
     response =
         await dio.get(path, queryParameters: params, options: requestOptions);
+        print('dio params = ${params.toString()}');
+        print('dio url = ${response.realUri}');
     return response.data;
   }
 

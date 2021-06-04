@@ -14,6 +14,9 @@ class SoftwareRecommendPage extends StatefulWidget {
 }
 
 class _SoftwareRecommendPageState extends State<SoftwareRecommendPage> {
+  int pageSize = 20;
+  int page = 1;
+
   SoftwareList _softwareList = SoftwareList();
   List<SoftWareBanner> _banners = [];
 
@@ -28,34 +31,51 @@ class _SoftwareRecommendPageState extends State<SoftwareRecommendPage> {
     super.initState();
   }
 
-void _onRefresh() async{
-    await Future.delayed(Duration(milliseconds: 1000));
-    _refreshController.refreshCompleted();
+  /// 下拉刷新
+  void _onRefresh() async {
+    page = 1;
+    _getRecommendSoftware();
   }
 
-  void _onLoading() async{
-    await Future.delayed(Duration(milliseconds: 1000));
-    setState(() {
-      
-    });
+  /// 上拉加载更多
+  void _onLoading() async {
+    _getRecommendSoftware();
+  }
+
+  /// 刷新和加载完成
+  void _smartRefreshFinish() {
+    _refreshController.refreshCompleted();
     _refreshController.loadComplete();
   }
 
   /// 获取列表
   void _getRecommendSoftware() {
-    ApiRepository.getSoftwareList().then((value) {
-      print(value.toString());
-      setState(() {
+    ApiRepository.getSoftwareList(pageSize, page).then((value) {
+      if (value.data == null) {
+        _smartRefreshFinish();
+        return;
+      }
+      if (value.data?.items != null) {
+        if (page == 1) {
+          _softwareList.items?.clear();
+        }
         _softwareList.currentSize = value.data?.currentSize;
         _softwareList.items?.addAll(value.data?.items ?? []);
-      });
+        int size = value.data?.items?.length ?? 0;
+        if (size >= pageSize) {
+          page++;
+        }
+      }
+      setState(() {});
+      _smartRefreshFinish();
+    }).onError((error, stackTrace) {
+      _smartRefreshFinish();
     });
   }
 
   /// 获取banner
   void _getBanners() {
     ApiRepository.getProjectBannerList().then((value) {
-      print(value.toString());
       setState(() {
         _banners.addAll(value.data ?? []);
       });

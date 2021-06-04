@@ -5,7 +5,7 @@ class ApiAddress {
   static final String softwareEngineerList = '/apiv3/projectAuthors?size=10';
 
   // 获取推荐的软件列表
-  static final String softwareRecommendList = '/apiv3/projectRecommend?size=20&page=1';
+  static final String softwareRecommendList = '/apiv3/projectRecommend';
 
   // 软件顶部banner
   static final String projectBanner = '/apiv3/projectBanner';
