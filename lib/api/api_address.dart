@@ -9,4 +9,7 @@ class ApiAddress {
 
   // 软件顶部banner
   static final String projectBanner = '/apiv3/projectBanner';
+
+  // 最新页面的banner内容
+  static final String lastInfoBanner = '/action/apiv2/banner?catalog=1';
 }

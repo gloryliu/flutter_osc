@@ -21,7 +21,16 @@ class _LastInfoPageState extends State<LastInfoPage> {
 
   /// 列表
   Widget _getInfoListWidget() {
-    return Container();
+    return Container(
+      child: ListView.builder(
+        shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
+        itemBuilder: (content, index) {
+          return _InfoListItemWidget();
+        },
+        itemCount: 100,
+      ),
+    );
   }
 
   /// banner
@@ -67,6 +76,30 @@ class _LastInfoPageState extends State<LastInfoPage> {
           }
         }, childCount: 2)),
       ],
+    );
+  }
+}
+
+/// 最新列表item
+class _InfoListItemWidget extends StatefulWidget {
+  const _InfoListItemWidget({Key? key}) : super(key: key);
+
+  @override
+  __InfoListItemWidgetState createState() => __InfoListItemWidgetState();
+}
+
+class __InfoListItemWidgetState extends State<_InfoListItemWidget> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Row(children: [
+        Expanded(child: Column(
+          children: [
+            Text('data')
+          ],
+        )),
+        Image.network('https://oscimg.oschina.net/oscnet/up-1e817b83c130d04fc1460f8c9ce0f39c153.png')
+      ],),
     );
   }
 }

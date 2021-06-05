@@ -1,6 +1,6 @@
 
 /// 最新页面相关实体
-/// 
+
 class LastInfoBannerResult {
   String? nextPageToken;
   String? prevPageToken;
